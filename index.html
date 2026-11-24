@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разбор ответов: Эволюция и анатомия | PHOTO ART</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: { natgeo: { yellow: '#FFCC00', yellowDark: '#E6B800', dark: '#0c0c0e', card: '#16161a', cardBorder: '#282832', slate: '#202028', textMuted: '#9ca3af' } },
+                fontFamily: { sans: ['Montserrat', 'sans-serif'], oswald: ['Oswald', 'sans-serif'] }
+            } }
+        }
+    </script>
+    <style>
+        body { background-color: #0c0c0e; color: #f3f4f6; font-family: 'Montserrat', sans-serif;
+            background-image: radial-gradient(circle at 15% 20%, rgba(255,204,0,.05) 0%, transparent 40%), radial-gradient(circle at 85% 80%, rgba(255,204,0,.04) 0%, transparent 40%); }
+        .gold-glow { box-shadow: 0 0 25px rgba(255,204,0,.18); }
+        .photo-frame { position: relative; overflow: hidden; border: 2px solid #282832; }
+        .photo-frame::after { content:''; position:absolute; inset:0; box-shadow: inset 0 0 20px rgba(0,0,0,.65); pointer-events:none; }
+        ::-webkit-scrollbar { width:8px; height:8px; } ::-webkit-scrollbar-track { background:#0c0c0e; }
+        ::-webkit-scrollbar-thumb { background:#282832; border-radius:4px; } ::-webkit-scrollbar-thumb:hover { background:#FFCC00; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-natgeo-yellow selection:text-black">
+
+<!-- HEADER -->
+<header class="border-b border-natgeo-cardBorder bg-natgeo-dark/95 backdrop-blur-md sticky top-0 z-50 px-4 py-3 sm:px-8">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <div class="w-6 h-9 border-4 border-natgeo-yellow bg-transparent flex-shrink-0"></div>
+            <div>
+                <h1 class="text-lg sm:text-xl font-extrabold tracking-wider text-white font-oswald uppercase flex items-center gap-2">
+                    PHOTO ART <span class="text-xs font-sans px-2 py-0.5 rounded bg-natgeo-yellow text-black font-bold tracking-normal">Разбор ответов</span>
+                </h1>
+                <p class="text-xs text-natgeo-textMuted hidden sm:block">Почему природа создала их именно такими: эволюция в деталях</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="index.html" class="px-3.5 py-2 rounded-lg bg-natgeo-slate hover:bg-natgeo-yellow hover:text-black border border-natgeo-cardBorder text-natgeo-yellow text-xs font-bold transition-all flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i><span>Вернуться к квизу</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto w-full px-4 py-6 flex-grow flex flex-col gap-5">
+
+    <!-- РУБРИКИ (ВКЛАДКИ) -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-2" id="category-tabs">
+            <button onclick="selectCategory('clothes')" data-cat="clothes" class="cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-yellow text-black transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-feather-pointed"></i> 1. Одежда
+            </button>
+            <button onclick="selectCategory('eyes')" data-cat="eyes" class="cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-card border border-natgeo-cardBorder text-white hover:border-natgeo-yellow transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-eye"></i> 2. Глаза
+            </button>
+            <button onclick="selectCategory('paws')" data-cat="paws" class="cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-card border border-natgeo-cardBorder text-white hover:border-natgeo-yellow transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-paw"></i> 3. Лапы
+            </button>
+            <button onclick="selectCategory('teeth')" data-cat="teeth" class="cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-card border border-natgeo-cardBorder text-white hover:border-natgeo-yellow transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-tooth"></i> 4. Зубы
+            </button>
+            <button onclick="selectCategory('ears')" data-cat="ears" class="cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-card border border-natgeo-cardBorder text-white hover:border-natgeo-yellow transition-all cursor-pointer flex items-center gap-2">
+                <i class="fa-solid fa-ear-listen"></i> 5. Уши
+            </button>
+        </div>
+
+        <!-- Быстрый выбор номера слайда -->
+        <div class="flex items-center gap-1.5 flex-wrap" id="slide-dots"></div>
+    </div>
+
+    <!-- КАРТОЧКА СЛАЙДА ДЛЯ ПРЕЗЕНТАЦИИ -->
+    <section class="bg-natgeo-card border border-natgeo-cardBorder rounded-2xl p-4 sm:p-7 shadow-2xl flex-grow flex flex-col justify-between gap-6">
+        
+        <!-- Верхняя шапка слайда -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-natgeo-cardBorder pb-4">
+            <div class="flex items-center gap-3">
+                <span id="slide-badge" class="px-3 py-1 rounded-md bg-natgeo-yellow text-black font-extrabold text-xs uppercase font-oswald tracking-wider">Рубрика</span>
+                <span class="text-xs text-natgeo-textMuted font-bold uppercase tracking-widest font-oswald">Карточка <span id="slide-index" class="text-white">1</span> из <span id="slide-total">10</span></span>
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="px-3 py-1.5 rounded-lg bg-natgeo-slate hover:bg-natgeo-cardBorder border border-natgeo-cardBorder text-xs text-gray-200 font-semibold cursor-pointer flex items-center gap-1.5 transition-all" title="Загрузить своё фото животного в полный рост">
+                    <i class="fa-solid fa-upload text-natgeo-yellow"></i>
+                    <span>Заменить полное фото</span>
+                    <input type="file" accept="image/*" class="hidden" onchange="uploadCustomFullPhoto(event)">
+                </label>
+            </div>
+        </div>
+
+        <!-- Основной контент: Фотографии + Научное пояснение -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Левая колонка: Визуальное сравнение (Макро + Животное полностью) -->
+            <div class="lg:col-span-6 flex flex-col gap-3">
+                <!-- Главное фото животного целиком -->
+                <div class="relative w-full h-72 sm:h-96 rounded-xl bg-black photo-frame group">
+                    <img id="full-animal-img" src="" alt="Животное полностью" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute top-3 left-3 bg-black/85 backdrop-blur-md px-3 py-1 rounded-md border border-white/15 text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-expand"></i><span>ЖИВОТНОЕ ПОЛНОСТЬЮ</span>
+                    </div>
+                </div>
+
+                <!-- Мини-карточка с макро-фрагментом из квиза -->
+                <div class="bg-natgeo-dark border border-natgeo-cardBorder rounded-xl p-3 flex items-center gap-4">
+                    <img id="macro-animal-img" src="" alt="Макро из квиза" onerror="this.src='https://placehold.co/200x200/16161a/FFCC00?text=Макро'" class="w-20 h-20 rounded-lg object-cover border border-natgeo-yellow/40 flex-shrink-0 bg-black">
+                    <div>
+                        <div class="text-[11px] uppercase tracking-wider text-natgeo-yellow font-bold font-oswald"><i class="fa-solid fa-magnifying-glass mr-1"></i> Кадр из вопроса квиза</div>
+                        <p id="macro-caption" class="text-xs text-natgeo-textMuted mt-1 leading-relaxed">Фрагмент, по которому участники угадывали животное.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка: Пояснение для ведущего -->
+            <div class="lg:col-span-6 flex flex-col justify-between space-y-4">
+                <div class="space-y-4">
+                    <div>
+                        <div class="text-xs uppercase tracking-widest text-natgeo-yellow font-bold mb-1" id="animal-latin">Вид животного</div>
+                        <h2 id="animal-name" class="text-3xl sm:text-4xl font-extrabold text-white font-oswald uppercase tracking-wide">Название животного</h2>
+                    </div>
+
+                    <!-- Главный вопрос: Почему именно так? -->
+                    <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-natgeo-slate to-natgeo-dark border-l-4 border-natgeo-yellow space-y-2">
+                        <h3 id="why-title" class="text-base sm:text-lg font-bold text-natgeo-yellow font-oswald uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb"></i><span>Почему у него именно такие особенности?</span>
+                        </h3>
+                        <p id="why-text" class="text-sm sm:text-base text-gray-200 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Дополнительные функции / Биомеханика -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="p-3.5 rounded-xl bg-natgeo-dark border border-natgeo-cardBorder">
+                            <div class="text-[11px] uppercase font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield-halved"></i><span>Главная функция</span>
+                            </div>
+                            <p id="func-main" class="text-xs text-natgeo-textMuted leading-relaxed"></p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-natgeo-dark border border-natgeo-cardBorder">
+                            <div class="text-[11px] uppercase font-bold text-sky-400 mb-1 flex items-center gap-1.5">
+                                <i class="fa-solid fa-dna"></i><span>Уникальная деталь</span>
+                            </div>
+                            <p id="func-detail" class="text-xs text-natgeo-textMuted leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Факт из квиза -->
+                <div class="p-3.5 rounded-xl bg-natgeo-yellow/10 border border-natgeo-yellow/30 flex items-start gap-3">
+                    <i class="fa-solid fa-quote-left text-natgeo-yellow text-lg mt-0.5"></i>
+                    <p id="quiz-fact" class="text-xs text-gray-300 italic leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+        <div class="flex items-center justify-between gap-4 pt-4 border-t border-natgeo-cardBorder">
+            <button onclick="prevSlide()" id="btn-prev" class="px-5 py-3 rounded-xl bg-natgeo-slate hover:bg-natgeo-cardBorder border border-natgeo-cardBorder text-white text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-chevron-left text-natgeo-yellow"></i><span>Предыдущее животное</span>
+            </button>
+
+            <span class="text-xs text-natgeo-textMuted hidden md:inline">Листайте стрелками <kbd class="px-1.5 py-0.5 bg-natgeo-dark border border-natgeo-cardBorder rounded text-white">←</kbd> <kbd class="px-1.5 py-0.5 bg-natgeo-dark border border-natgeo-cardBorder rounded text-white">→</kbd></span>
+
+            <button onclick="nextSlide()" id="btn-next" class="px-5 py-3 rounded-xl bg-natgeo-yellow hover:bg-natgeo-yellowDark text-black text-xs sm:text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer">
+                <span id="btn-next-label">Следующее животное</span><i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </section>
+</main>
+
+<footer class="border-t border-natgeo-cardBorder py-4 text-center text-xs text-natgeo-textMuted mt-4">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <span>PHOTO ART • Интерактивный разбор для аудитории</span>
+        <span>Одежда • Глаза • Лапы • Зубы • Уши</span>
+    </div>
+</footer>
+
+<script>
+const reviewData = {
+    clothes: {
+        title: "Рубрика 01: Чья одежда",
+        items: [
+            {
+                name: "Бенгальский тигр",
+                latin: "Panthera tigris tigris",
+                macroUrl: "tiger.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Walking_tiger_female.jpg/1280px-Walking_tiger_female.jpg",
+                whyTitle: "Почему тигр оранжевый в чёрную полоску?",
+                whyText: "Для человека оранжевый тигр кажется ярким, но для его добычи (оленей и кабанов), обладающей дихроматическим зрением, оранжевый цвет выглядит как зелёный! Вертикальные чёрные полосы разбивают силуэт хищника на фоне высокой травы и теней деревьев, делая его практически невидимым при скрадывании.",
+                funcMain: "Камуфляж в высокой траве и зарослях тростника.",
+                funcDetail: "Полосы нанесены даже на кожу тигра: если его побрить, рисунок сохранится.",
+                fact: "Узор из полос тигра так же уникален, как отпечатки пальцев человека."
+            },
+            {
+                name: "Леопард",
+                latin: "Panthera pardus",
+                macroUrl: "leopard.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/African_leopard_male_%28cropped%29.jpg/1280px-African_leopard_male_%28cropped%29.jpg",
+                whyTitle: "Зачем леопарду пятна в виде розеток?",
+                whyText: "Леопард проводит много времени на деревьях и в кустарниках. Розетковидные кольца идеально имитируют игру солнечных бликов и теней, пробивающихся сквозь листву. Это позволяет хищнику оставаться незамеченным как для добычи внизу, так и для гиен со львами.",
+                funcMain: "Маскировка в пятнистой тени крон деревьев.",
+                funcDetail: "В отличие от ягуара, внутри розеток леопарда нет тёмных точек.",
+                fact: "Леопард способен затащить на дерево тушу антилопы, превышающую его собственный вес."
+            },
+            {
+                name: "Окапи",
+                latin: "Okapia johnstoni",
+                macroUrl: "okapi.png",
+                fullAnimalUrl: "https://i.ytimg.com/vi/j9B7Sf-FeMA/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgXyhPMA8=&amp;rs=AOn4CLAlDIs4bSPYaG_C0e3VbIlBPjt-cA",
+                whyTitle: "Почему лесной родственник жирафа носит «штаны» зебры?",
+                whyText: "Окапи живёт в густых тропических лесах Конго. Контрастные белые полосы на ногах и крупе разбивают контур тела в полумраке джунглей. Кроме того, они служат визуальным маячком для детёнышей: идя за матерью в плотном подлеске, малыш легко удерживает её в поле зрения.",
+                funcMain: "Двойная роль: маскировка в лесу и ориентир для детёныша.",
+                funcDetail: "Шерсть покрыта маслянистым секретом, отталкивающим тропические ливни.",
+                fact: "Окапи — единственный ближайший живой родственник жирафа."
+            },
+            {
+                name: "Гепард",
+                latin: "Acinonyx jubatus",
+                macroUrl: "cheetos.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/1280px-TheCheethcat.jpg",
+                whyTitle: "Почему у гепарда сплошные точки и чёрные полосы под глазами?",
+                whyText: "Гепард охотится днём на открытых равнинах саванны. Мелкие сплошные точки маскируют его в выжженной солнцем траве. А чёрные «слёзные» полосы от глаз к пасти работают как антибликовое покрытие у спортсменов — они поглощают слепящий свет африканского солнца.",
+                funcMain: "Маскировка в сухой траве саванны и защита глаз от бликов.",
+                funcDetail: "Пятна сплошные, круглые или овальные, без светлой середины.",
+                fact: "Самое быстрое наземное животное: разгон до 100 км/ч за 3 секунды."
+            },
+            {
+                name: "Ягуар",
+                latin: "Panthera onca",
+                macroUrl: "jaguar.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/1280px-Standing_jaguar.jpg",
+                whyTitle: "Чем и зачем шкура ягуара отличается от шкуры леопарда?",
+                whyText: "Ягуар живёт в влажных лесах Амазонии и у рек. Его розетки значительно крупнее, чем у леопарда, и содержат внутри маленькие чёрные точки. Такой крупный геометрический рисунок лучше всего маскирует зверя среди широких листьев тропических растений и бликов воды.",
+                funcMain: "Камуфляж в густых тропических джунглях и у водоёмов.",
+                funcDetail: "Крупные розетки с чёрными точками внутри.",
+                fact: "Ягуар обладает самым мощным укусом среди всех кошачьих — прокусывает панцирь черепахи."
+            },
+            {
+                name: "Зебра",
+                latin: "Equus quagga",
+                macroUrl: "zebra.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Plains_Zebra_Equus_quagga.jpg/1280px-Plains_Zebra_Equus_quagga.jpg",
+                whyTitle: "Зачем зебре чёрно-белые полосы в саванне?",
+                whyText: "Главная причина оказалась неожиданной: полосы создают оптическую иллюзию, которая сбивает фасеточное зрение слепней и мух цеце — насекомые не могут правильно рассчитать торможение и промахиваются при посадке. Вторая функция — терморегуляция за счёт разного нагрева чёрных и белых участков.",
+                funcMain: "Защита от укусов мух цеце, слепней и перегрева.",
+                funcDetail: "У каждого вида зебр и каждой особи ширина и наклон полос индивидуальны.",
+                fact: "Кожа под шерстью зебры полностью чёрная."
+            },
+            {
+                name: "Жираф",
+                latin: "Giraffa camelopardalis",
+                macroUrl: "zirafa.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Giraffe_standing.jpg/960px-Giraffe_standing.jpg",
+                whyTitle: "Почему пятна жирафа работают как кондиционер?",
+                whyText: "Жирафы не умеют потеть. Под каждым тёмным пятном на их шкуре проходит густая сеть кровеносных сосудов, окружённая крупными потовыми железами. Когда жирафу жарко, кровь приливает к этим пятнам, и тепло через них излучается в воздух, охлаждая организм.",
+                funcMain: "Терморегуляция тела и камуфляж среди крон акаций.",
+                funcDetail: "Пятна служат «тепловыми окнами» для сброса лишнего жара.",
+                fact: "По форме и цвету пятен можно определить подвид жирафа и его возраст."
+            },
+            {
+                name: "Колибри",
+                latin: "Trochilidae",
+                macroUrl: "colibri.png",
+                fullAnimalUrl: "https://i.pinimg.com/736x/56/57/6c/56576ca0f87edddf2d571771d2152b17.jpg?nii=t",
+                whyTitle: "Почему перья колибри переливаются как драгоценные камни?",
+                whyText: "Яркий металлический блеск создаётся не краской, а микроскопическими воздушными пузырьками в структуре пера, которые работают как призмы. При повороте головы свет преломляется под другим углом — самец мгновенно вспыхивает ярким цветом, привлекая самку или отпугивая конкурентов от цветка.",
+                funcMain: "Визуальная коммуникация и защита кормовой территории.",
+                funcDetail: "Структурная окраска: при смене угла обзора перья кажутся тёмными.",
+                fact: "Единственные птицы, способные летать задом наперёд."
+            },
+            {
+                name: "Павлин",
+                latin: "Pavo cristatus",
+                macroUrl: "pava.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Peacock_Plumage.jpg/1280px-Peacock_Plumage.jpg",
+                whyTitle: "Зачем самцу павлина огромный «хвост» с глазами?",
+                whyText: "То, что называют хвостом, на самом деле удлинённые перья надхвостья. Это классический пример полового отбора: роскошный, симметричный веер с яркими «глазками» доказывает самке, что самец здоров, силён и способен выжить даже с таким тяжёлым украшением.",
+                funcMain: "Привлечение партнёра (демонстрация здоровья и генетики).",
+                funcDetail: "Цвет создаётся наноструктурами кератина, преломляющими свет.",
+                fact: "Самки павлина скромного серо-коричневого цвета для маскировки на гнезде."
+            },
+            {
+                name: "Кукушка",
+                latin: "Cuculus canorus",
+                macroUrl: "cocoo.png",
+                fullAnimalUrl: "https://fsd.kopilkaurokov.ru/up/html/2018/06/13/k_5b210ae42e750/473191_1.jpeg",
+                whyTitle: "Почему кукушка «одета» точь-в-точь как ястреб?",
+                whyText: "Поперечные полосы на брюшке и серая спина кукушки копируют окрас хищного ястреба-перепелятника. Это мимикрия Бейтса: мелкие певчие птицы пугаются «ястреба», разлетаются от своего гнезда, и кукушка получает драгоценные секунды, чтобы подкинуть туда своё яйцо.",
+                funcMain: "Маскировка под опасного хищника для доступа к чужим гнёздам.",
+                funcDetail: "Полосатый рисунок на груди сбивает с толку хозяев гнезда.",
+                fact: "Птенец кукушки вылупляется раньше остальных и выбрасывает яйца хозяев."
+            }
+        ]
+    },
+    eyes: {
+        title: "Рубрика 02: Чей глаз",
+        items: [
+            {
+                name: "Хамелеон",
+                latin: "Chamaeleonidae",
+                macroUrl: "cham.png",
+                fullAnimalUrl: "https://thejigsawpuzzles.com/img-puzzle-6933485-1024/Chameleon-in-Madagascar",
+                whyTitle: "Почему глаза хамелеона вращаются раздельно в конусах?",
+                whyText: "Хамелеон — медлительный засадный охотник, которому нельзя выдавать себя движениями головы. Конусовидные веки оставляют открытым только крошечный зрачок, а независимое вращение глаз даёт обзор на 360°. Заметив насекомое, хамелеон мгновенно сводит оба глаза на цель, получая точное бинокулярное зрение для выстрела языком.",
+                funcMain: "Круговой обзор без движения головы и точный расчёт дистанции.",
+                funcDetail: "Хрусталик работает как телеобъектив, увеличивая картинку.",
+                fact: "Хамелеон фокусируется на добыче быстрее любого другого позвоночного."
+            },
+            {
+                name: "Красноглазая квакша",
+                latin: "Agalychnis callidryas",
+                macroUrl: "kva.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Red_eyed_tree_frog_edit2.jpg/1280px-Red_eyed_tree_frog_edit2.jpg",
+                whyTitle: "Зачем ночной лягушке ярко-красные глаза с вертикальным зрачком?",
+                whyText: "Днём квакша спит, прижавшись к зелёному листу и плотно закрыв глаза — она полностью сливается с фоном. Если хищник (птица или змея) всё же замечает её, лягушка резко распахивает огромные алые глаза. Вспышка яркого цвета на долю секунды ошеломляет хищника, давая квакше время упрыгать.",
+                funcMain: "«Отпугивающая» вспышка (дейматическое поведение) при нападении.",
+                funcDetail: "Нижнее веко прозрачное с золотистой сеткой — лягушка видит даже с закрытыми глазами.",
+                fact: "Вертикальный щелевидный зрачок защищает чувствительную сетчатку от дневного света."
+            },
+            {
+                name: "Филин",
+                latin: "Bubo bubo",
+                macroUrl: "fil.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Bubo_bubo_winter_1.jpg/1280px-Bubo_bubo_winter_1.jpg",
+                whyTitle: "Почему глаза совы огромные и не двигаются в глазницах?",
+                whyText: "Чтобы уловить максимум света в полной темноте, глаза филина эволюционировали в вытянутые «телескопы», закреплённые костными кольцами. Из-за такой формы они не могут вращаться, но это компенсируется сверхгибкой шеей (14 позвонков вместо 7 у человека), позволяющей поворачивать голову на 270 градусов.",
+                funcMain: "Сверхчувствительное ночное зрение и точное определение расстояния.",
+                funcDetail: "Оранжевая радужка характерна для видов, охотящихся преимущественно в сумерках.",
+                fact: "Если бы у человека были глаза пропорционально как у филина, они были бы размером с апельсин."
+            },
+            {
+                name: "Нильский крокодил",
+                latin: "Crocodylus niloticus",
+                macroUrl: "croco.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/NileCrocodile.jpg/1280px-NileCrocodile.jpg",
+                whyTitle: "Почему глаза крокодила расположены на макушке и светятся в темноте?",
+                whyText: "Высокая посадка глаз позволяет крокодилу полностью погрузить тело под воду, оставив на поверхности только перископы-глаза и ноздри. Вертикальный зрачок сужается в узкую щель на ярком солнце и широко раскрывается ночью, а слой тапетум за сетчаткой отражает свет, усиливая ночное зрение.",
+                funcMain: "Скрытое наблюдение из-под воды и ночная охота.",
+                funcDetail: "Третье прозрачное веко защищает глаз под водой как очки для плавания.",
+                fact: "В свете фонаря глаза крокодила отражают ярко-красный или оранжевый свет."
+            },
+            {
+                name: "Снежный барс (Ирбис)",
+                latin: "Panthera uncia",
+                macroUrl: "bars.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Irbis4.JPG/1280px-Irbis4.JPG",
+                whyTitle: "Почему у снежного барса светлые серо-зелёные глаза?",
+                whyText: "В отличие от большинства больших кошек с жёлто-янтарными глазами, у ирбиса радужка бледно-зелёная или дымчато-серая. Такой оттенок идеально сочетается с его пепельно-белым мехом и скалами высокогорья, не выдавая хищника в засаде на фоне снега и камней.",
+                funcMain: "Маскировка среди серых скал и снегов высокогорья.",
+                funcDetail: "Круглый зрачок, как и у всех крупных кошек рода Panthera.",
+                fact: "Ирбис — единственная крупная кошка, которая не умеет рычать."
+            },
+            {
+                name: "Лама",
+                latin: "Lama glama",
+                macroUrl: "lama.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Llama_lying_down.jpg/1280px-Llama_lying_down.jpg",
+                whyTitle: "Зачем ламе горизонтальный зрачок и густые ресницы?",
+                whyText: "Как и у многих травоядных открытых пространств, горизонтальный зрачок ламы даёт панорамный обзор почти на 330 градусов по горизонтали — это позволяет вовремя заметить хищника, даже когда голова опущена к траве. Густые длинные ресницы защищают глаза от горного ветра, пыли и яркого ультрафиолета в Андах.",
+                funcMain: "Панорамный контроль горизонта и защита от горного солнца и пыли.",
+                funcDetail: "Складки радужки (корпора нигра) работают как встроенный солнцезащитный козырёк.",
+                fact: "При повороте головы глаза ламы вращаются так, чтобы зрачок всегда оставался параллелен земле."
+            },
+            {
+                name: "Сине-жёлтый ара",
+                latin: "Ara ararauna",
+                macroUrl: "ara.png",
+                fullAnimalUrl: "https://ekzoopark.ru/files/animals/birds/ars.jpg",
+                whyTitle: "Почему вокруг глаза попугая ара голая белая кожа с узором?",
+                whyText: "Область вокруг глаз попугая ара лишена перьев и покрыта уникальным узором из мелких чёрных пёрышек. Эта голая кожа работает как индикатор эмоций: когда птица возбуждена, сердится или радуется, к коже приливает кровь, и она заметно румянеет.",
+                funcMain: "Социальная коммуникация (выражение эмоций) и защита перьев от загрязнения фруктами.",
+                funcDetail: "Рисунок линий вокруг глаз уникален для каждого попугая.",
+                fact: "Птицы видят ультрафиолетовый спектр, недоступный человеческому глазу."
+            },
+            {
+                name: "Геккон",
+                latin: "Gekkota",
+                macroUrl: "gekk.png",
+                fullAnimalUrl: "https://zookengoo.ru/wp-content/uploads/2016/07/gekkon-toki-foto-04.jpg",
+                whyTitle: "Почему у ночного геккона зрачок похож на нитку бус и зачем он облизывает глаза?",
+                whyText: "При ярком дневном свете зрачок ночного геккона сжимается в цепочку из нескольких крошечных отверстий — это защищает сверхчувствительную сетчатку от ожога и позволяет точно фокусироваться. А так как у большинства гекконов нет подвижных век (глаз закрыт прозрачной линзой), они чистят глаза длинным языком.",
+                funcMain: "Защита от яркого света днём и цветное зрение в глубоких сумерках.",
+                funcDetail: "Гекконы различают цвета в 350 раз лучше человека в тусклом освещении.",
+                fact: "Отсутствие век компенсируется регулярным «умыванием» глаз языком."
+            },
+            {
+                name: "Сибирский хаски",
+                latin: "Canis lupus familiaris",
+                macroUrl: "haski.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Black-Magic-Big-Boy.jpg/1280px-Black-Magic-Big-Boy.jpg",
+                whyTitle: "Откуда у хаски ледяные голубые глаза и гетерохромия?",
+                whyText: "Голубой цвет глаз у сибирских хаски связан с особой мутацией в 18-й хромосоме (рядом с геном ALX4), которая снижает выработку меланина в радужке, но не влияет на окрас шерсти. У северных ездовых собак эта черта закреплялась веками, а неполное проявление гена часто даёт разные глаза — один голубой, другой карий.",
+                funcMain: "Генетическая особенность породы, не влияющая на остроту зрения.",
+                funcDetail: "Голубой цвет возникает из-за рассеивания света в строме радужки без пигмента.",
+                fact: "Хаски — одна из немногих пород собак, у которых голубые глаза не связаны с глухотой."
+            },
+            {
+                name: "Каракатица",
+                latin: "Sepiida",
+                macroUrl: "carak.png",
+                fullAnimalUrl: "https://i.imgur.com/9lJAQ.jpeg?fb",
+                whyTitle: "Зачем каракатице зрачок в форме буквы W?",
+                whyText: "W-образный зрачок помогает каракатице сбалансировать неравномерное освещение под водой: сверху падает яркий солнечный свет, а снизу — тёмное дно. Кроме того, такая форма зрачка позволяет моллюску видеть поляризованный свет и мгновенно оценивать расстояние до добычи одним глазом.",
+                funcMain: "Выравнивание яркости света сверху и снизу и восприятие поляризации.",
+                funcDetail: "Каракатица не различает цвета, но видит поляризацию света, невидимую для рыб.",
+                fact: "Глаза головоногих моллюсков не имеют слепого пятна, в отличие от глаз позвоночных."
+            }
+        ]
+    },
+    paws: {
+        title: "Рубрика 03: Чья лапа",
+        items: [
+            {
+                name: "Африканский слон",
+                latin: "Loxodonta africana",
+                macroUrl: "slon.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg/1280px-African_Elephant_%28Loxodonta_africana%29_male_%2817289351322%29.jpg",
+                whyTitle: "Почему 6-тонный слон ходит почти бесшумно?",
+                whyText: "Скелет стопы слона устроен так, что он фактически ходит «на цыпочках», а под пяткой находится толстая упругая подушка из жировой и фиброзной ткани. Когда слон наступает, подушка расплющивается, гася ударную нагрузку и поглощая звук шагов, а также улавливает сейсмические вибрации земли от других стад.",
+                funcMain: "Амортизация огромного веса, бесшумная ходьба и улавливание вибраций.",
+                funcDetail: "Подошва работает как природный рессорный амортизатор.",
+                fact: "Слоны умеют «слушать» ногами низкочастотный гул сородичей за несколько километров."
+            },
+            {
+                name: "Коала",
+                latin: "Phascolarctos cinereus",
+                macroUrl: "koala.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Koala_climbing_tree.jpg/1280px-Koala_climbing_tree.jpg",
+                whyTitle: "Зачем коале два больших пальца на передних лапах?",
+                whyText: "Коала всю жизнь проводит на гладких стволах эвкалиптов. На её передней лапе первый и второй пальцы противопоставлены трём остальным — образуются своеобразные «двойные клещи» с острыми изогнутыми когтями. Это обеспечивает мёртвую хватку даже во время сна на ветке.",
+                funcMain: "Надёжный захват гладкой коры эвкалиптов и ветвей.",
+                funcDetail: "На подушечках пальцев есть папиллярные узоры, почти идентичные человеческим.",
+                fact: "Даже под микроскопом отпечатки пальцев коалы трудно отличить от отпечатков человека."
+            },
+            {
+                name: "Африканский страус",
+                latin: "Struthio camelus",
+                macroUrl: "straus.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Struthio_camelus_-_Etosha_2014_%283%29.jpg/1280px-Struthio_camelus_-_Etosha_2014_%283%29.jpg",
+                whyTitle: "Почему у страуса всего два пальца на ноге?",
+                whyText: "В ходе эволюции ради максимальной скорости бега страус потерял лишние пальцы, как и лошадь. Основную нагрузку при отталкивании от земли несёт огромный внутренний палец с толстым когтем-копытом, а меньший наружный палец помогает сохранять равновесие на виражах.",
+                funcMain: "Скоростной бег до 70 км/ч и мощный удар для самозащиты.",
+                funcDetail: "Единственная птица в мире с двупалой стопой.",
+                fact: "Ударом ноги страус способен отпугнуть или даже тяжело ранить льва."
+            },
+            {
+                name: "Утконос",
+                latin: "Ornithorhynchus anatinus",
+                macroUrl: "utconos.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Platypus.jpg/1280px-Platypus.jpg",
+                whyTitle: "Как лапа утконоса работает и в воде, и под землёй?",
+                whyText: "На передних лапах утконоса кожаная перепонка выступает далеко за пределы когтей, превращая лапу в эффективное весло. Но как только утконос выходит на берег, чтобы рыть нору, он подгибает перепонку под ладонь, обнажая крепкие роющие когти.",
+                funcMain: "Трансформация: весло для плавания и лопата для рытья нор.",
+                funcDetail: "У самцов на задних лапах есть ядовитые шпоры.",
+                fact: "Утконос — одно из немногих ядовитых млекопитающих на планете."
+            },
+            {
+                name: "Зелёная морская черепаха",
+                latin: "Chelonia mydas",
+                macroUrl: "turtles.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Hawaii_turtle_2.JPG/1280px-Hawaii_turtle_2.JPG",
+                whyTitle: "Почему лапы морской черепахи превратились в длинные вёсла?",
+                whyText: "В отличие от сухопутных черепах с коренастыми ногами-столбами, морская черепаха проводит в океане всю жизнь. Её передние конечности вытянулись в плоские гидродинамические ласты: взмахивая ими вверх-вниз, она буквально «летит» в толще воды, преодолевая тысячи километров.",
+                funcMain: "Дальние океанские миграции с минимальными затратами энергии.",
+                funcDetail: "Задние ласты работают как рули направления и лопатки для рытья ямок под яйца.",
+                fact: "Морская черепаха не может втянуть голову и ласты под панцирь."
+            },
+            {
+                name: "Верблюд",
+                latin: "Camelus",
+                macroUrl: "camel.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/07._Camel_Profile%2C_near_Silverton%2C_NSW%2C_07.07.2007.jpg/1280px-07._Camel_Profile%2C_near_Silverton%2C_NSW%2C_07.07.2007.jpg",
+                whyTitle: "Почему у верблюда вместо копыт широкие мозолистые подушки?",
+                whyText: "Узкие твёрдые копыта проваливались бы в рыхлый песок пустыни. У верблюда два пальца соединены широкой эластичной подушкой с толстой мозолистой подошвой: при нажатии она расширяется как снегоступ, распределяя вес и защищая ноги от раскалённого до +70 °C песка.",
+                funcMain: "Ходьба по зыбучим пескам и термоизоляция от раскалённой почвы.",
+                funcDetail: "Относится к отряду мозоленогих, а не парнокопытных.",
+                fact: "При ходьбе верблюд одновременно переставляет обе правые, а затем обе левые ноги (иноходь)."
+            },
+            {
+                name: "Бурый медведь",
+                latin: "Ursus arctos",
+                macroUrl: "bear.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/2010-kodiak-bear-1.jpg/1280px-2010-kodiak-bear-1.jpg",
+                whyTitle: "Зачем бурому медведю длинные невтяжные когти?",
+                whyText: "В отличие от кошек, медведю не нужны острые как бритва крючки для удержания добычи в прыжке. Его длинные (до 10 см), туповатые и прочные когти устроены как кирки и грабли: ими он раскапывает норы грызунов, разрывает трухлявые пни в поисках личинок и переворачивает тяжёлые камни.",
+                funcMain: "Копание земли, разрушение валежника и удержание рыбы.",
+                funcDetail: "Стопоходящее животное: опирается на всю ступню, как человек.",
+                fact: "След задней лапы бурого медведя удивительно похож на след босого человека."
+            },
+            {
+                name: "Белый медведь",
+                latin: "Ursus maritimus",
+                macroUrl: "bear2.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Polar_Bear_-_Alaska_%28cropped%29.jpg/1280px-Polar_Bear_-_Alaska_%28cropped%29.jpg",
+                whyTitle: "Как лапы белого медведя не скользят по льду и помогают плыть?",
+                whyText: "Подошвы огромных лап белого медведя (шириной до 30 см) густо покрыты жёсткой шерстью для теплоизоляции, а открытые участки кожи усеяны микроскопическими сосочками-бугорками, создающими эффект наждачной бумаги на скользком льду. Между пальцами есть перепонка для гребли.",
+                funcMain: "Сцепление с голым льдом, защита от мороза и плавание в ледяной воде.",
+                funcDetail: "Широкая ступня работает как снегоступ на тонком льду.",
+                fact: "Белый медведь способен проплыть без отдыха более 60 километров."
+            },
+            {
+                name: "Тапир",
+                latin: "Tapirus",
+                macroUrl: "tapir.png",
+                fullAnimalUrl: "https://www.shkolazhizni.ru/img/content/i170/170307_or.jpg",
+                whyTitle: "Почему у тапира 4 пальца спереди и 3 сзади?",
+                whyText: "Тапиры — древние непарнокопытные обитатели влажных тропических лесов и болот. Растопыренные пальцы с небольшими копытцами на каждом из них не дают тяжёлому зверю вязнуть в мягкой болотной грязи и скользить на размокших лесных тропах.",
+                funcMain: "Устойчивость на вязкой болотистой почве джунглей.",
+                funcDetail: "4 пальца на передних ногах, 3 пальца на задних — уникальный признак.",
+                fact: "Ближайшие родственники тапира — лошади и носороги."
+            },
+            {
+                name: "Фламинго",
+                latin: "Phoenicopterus",
+                macroUrl: "flamingo.png",
+                fullAnimalUrl: "https://img.ixbt.site/live/images/original/32/37/33/2026/09/01/5e1d6349f5.png",
+                whyTitle: "Зачем фламинго длинные ноги с перепонками и почему он стоит на одной?",
+                whyText: "Длинные ноги позволяют фламинго заходить на глубину, недоступную для других болотных птиц, а перепонки между пальцами не дают проваливаться в ил. Стояние на одной ноге сокращает потерю тепла через голую кожу в холодной воде и почти не требует мышечных усилий благодаря особому «замку» в суставах.",
+                funcMain: "Кормление на глубоководье и экономия тепла при отдыхе.",
+                funcDetail: "Сустав посередине ноги, гнущийся назад — это пятка (голеностоп), а не колено.",
+                fact: "Настоящее колено фламинго спрятано высоко под перьями."
+            }
+        ]
+    },
+    teeth: {
+        title: "Рубрика 04: Чей зуб",
+        items: [
+            {
+                name: "Бегемот (Гиппопотам)",
+                latin: "Hippopotamus amphibius",
+                macroUrl: "hipo.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Portrait_Hippopotamus_in_the_water.jpg/1280px-Portrait_Hippopotamus_in_the_water.jpg",
+                whyTitle: "Зачем травоядному бегемоту полуметровые клыки?",
+                whyText: "Бегемот питается травой, срывая её ороговевшими губами, а коренными зубами перетирает пищу. Гигантские нижние клыки и резцы нужны ему исключительно как оружие в жестоких турнирных боях самцов за территорию и самок, а также для защиты от крокодилов и львов.",
+                funcMain: "Оружие в территориальных схватках и защита от хищников.",
+                funcDetail: "Клыки растут всю жизнь и самозатачиваются друг о друга.",
+                fact: "Сила сжатия челюстей бегемота в три раза выше, чем у льва."
+            },
+            {
+                name: "Большая белая акула",
+                latin: "Carcharodon carcharias",
+                macroUrl: "shark.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/White_shark.jpg/1280px-White_shark.jpg",
+                whyTitle: "Почему зубы акулы треугольные, зазубренные и растут рядами?",
+                whyText: "Зубы акулы не сидят в костных лунках челюсти, а закреплены в хрящевой ткани дёсен, поэтому легко ломаются о кости добычи. На смену выпавшему зубу за пару дней выдвигается новый из заднего ряда («зубной конвейер»). Треугольная форма с пилой по краям позволяет вырезать куски мяса у крупной добычи.",
+                funcMain: "Разрезание крупной добычи с постоянной заменой сломанных зубов.",
+                funcDetail: "За жизнь белая акула сменяет до 30 000 зубов.",
+                fact: "У акул нет корней зубов в привычном смысле — они прикреплены связками."
+            },
+            {
+                name: "Африканский лев",
+                latin: "Panthera leo",
+                macroUrl: "lion.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Lion_waiting_in_Namibia.jpg/1280px-Lion_waiting_in_Namibia.jpg",
+                whyTitle: "Почему лев не жуёт мясо, а режет его «ножницами»?",
+                whyText: "Челюсти льва двигаются только вверх-вниз и не способны перетирать пищу из стороны в сторону. Длинными клыками хищник удерживает и душит добычу, а задними «хищными зубами» (карнассиалами), работающими как лезвия ножниц, разрезает мясо на куски и заглатывает их целиком.",
+                funcMain: "Удержание добычи клыками и разрезание мяса коренными зубами.",
+                funcDetail: "Между клыками и коренными зубами есть промежуток для глубокого захвата.",
+                fact: "Шершавый язык льва покрыт роговыми сосочками, способными соскребать мясо с костей."
+            },
+            {
+                name: "Морж",
+                latin: "Odobenus rosmarus",
+                macroUrl: "morz.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Walrus_animal_male_detailed_photo.jpg/960px-Walrus_animal_male_detailed_photo.jpg",
+                whyTitle: "Зачем моржу метровые бивни, если он ест моллюсков?",
+                whyText: "Морж не выкапывает моллюсков бивнями, как думали раньше — он выдувает их из ила струёй воды и всасывает языком. Бивни (удлинённые верхние клыки) служат как ледорубы, помогая многотонному зверю подтягиваться на скользкую льдину, пробивать полыньи и демонстрировать статус в стаде.",
+                funcMain: "Подъём на лёд, пробивание лунок и демонстрация ранга.",
+                funcDetail: "Бивни могут достигать 1 метра в длину и весить более 5 кг.",
+                fact: "По кольцам на бивнях можно определить возраст моржа, как по годовым кольцам дерева."
+            },
+            {
+                name: "Обыкновенный бобр",
+                latin: "Castor fiber",
+                macroUrl: "bobr.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/American_Beaver.jpg/1280px-American_Beaver.jpg",
+                whyTitle: "Почему резцы бобра ярко-оранжевые и никогда не тупятся?",
+                whyText: "Передняя стенка резцов бобра покрыта толстым слоем сверхпрочной эмали, насыщенной соединениями железа — именно железо придаёт им ржаво-оранжевый цвет и прочность стали. Задняя часть зуба состоит из более мягкого дентина, который стачивается быстрее: так зуб сам затачивается под углом стамески.",
+                funcMain: "Валка деревьев и срезание коры с постоянным самозатачиванием.",
+                funcDetail: "Резцы растут всю жизнь; если бобр перестанет грызть, зубы перерастут.",
+                fact: "Бобр способен повалить осину диаметром 15 см всего за 15–20 минут."
+            },
+            {
+                name: "Пиранья",
+                latin: "Pygocentrus nattereri",
+                macroUrl: "piranha.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Pygocentrus_nattereri_-_Karlsruhe_Zoo_01.jpg/1280px-Pygocentrus_nattereri_-_Karlsruhe_Zoo_01.jpg",
+                whyTitle: "Как зубы пираньи смыкаются в единый капкан?",
+                whyText: "Треугольные острые зубы пираньи на верхней и нижней челюстях расположены в один ряд и точно входят в пазы друг друга при смыкании пасти. Получается единое зазубренное лезвие, которое с лёгкостью выкусывает куски плоти, перекусывает сухожилия и даже разгрызает твёрдые семена.",
+                funcMain: "Мгновенное откусывание кусков пищи при смыкании челюстей.",
+                funcDetail: "Зубы сменяются не по одному, а сразу целой половиной челюсти.",
+                fact: "У пираньи один из самых сильных укусов среди рыб относительно массы тела."
+            },
+            {
+                name: "Домашняя лошадь",
+                latin: "Equus ferus caballus",
+                macroUrl: "horse.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Nokota_Horses_cropped.jpg/1280px-Nokota_Horses_cropped.jpg",
+                whyTitle: "Почему зубы лошади такие высокие и со сложным узором?",
+                whyText: "Дикая степная трава содержит много жёсткого кремнезёма и пыли, которые быстро стирают зубы как наждак. Поэтому у лошадей развились гипсодонтные (высококоронковые) коренные зубы с глубокими складками эмали, цемента и дентина: по мере стирания поверхность остаётся ребристой, как мельничный жернов.",
+                funcMain: "Перетирание жёсткой степной травы на протяжении десятилетий.",
+                funcDetail: "Зубы постепенно выдвигаются из челюсти по мере стирания.",
+                fact: "По степени стёртости резцов лошади опытные коневоды определяют её возраст."
+            },
+            {
+                name: "Комодский варан",
+                latin: "Varanus komodoensis",
+                macroUrl: "varan.png",
+                fullAnimalUrl: "https://www.zoo-ekzo.ru/sites/default/files/images/varanus_komodoensis_0.jpgg",
+                whyTitle: "Зачем варану загнутые назад зубы с пилой по краю?",
+                whyText: "Крупнейшая ящерица в мире не пережёвывает пищу. Её сплющенные с боков, загнутые назад зубы покрыты зазубринами, как у хищных динозавров. Ухватив крупную добычу (оленя или буйвола), варан тянет голову назад и вырывает большие куски мяса, попутно впрыскивая яд из желёз нижней челюсти.",
+                funcMain: "Вырывание кусков плоти и нанесение глубоких рваных ран.",
+                funcDetail: "Зубы спрятаны в толстых десневых карманах и смазываются слюной с токсинами.",
+                fact: "Яд комодского варана препятствует свёртыванию крови и вызывает шок у добычи."
+            },
+            {
+                name: "Садовая улитка",
+                latin: "Gastropoda",
+                macroUrl: "snail.png",
+                fullAnimalUrl: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Helix_pomatia_89a.jpg/1280px-Helix_pomatia_89a.jpg?utm_source=ru.wikipedia.org&amp;utm_campaign=index&amp;utm_content=thumbnailg",
+                whyTitle: "Почему у улитки больше зубов, чем у акулы?",
+                whyText: "В ротовой полости улитки находится радула — гибкая хитиновая лента-тёрка, усеянная тысячами микроскопических зубчиков (у некоторых видов их до 25 000!). Двигая радулой вперёд-назад, улитка соскабливает мягкие ткани листьев, грибов и водорослей.",
+                funcMain: "Соскабливание растительной пищи по принципу напильника.",
+                funcDetail: "Изношенные передние ряды зубчиков постоянно заменяются новыми сзади.",
+                fact: "По числу зубов обычная улитка обгоняет любого хищника на планете."
+            },
+            {
+                name: "Бабирусса",
+                latin: "Babyrousa",
+                macroUrl: "babirusa.png",
+                fullAnimalUrl: "https://static.wikia.nocookie.net/animal-simulator/images/f/f0/Babirusa_skin.jpg/revision/latest?cb=20230428233212",
+                whyTitle: "Почему верхние клыки бабируссы прорастают сквозь морду?",
+                whyText: "У самцов этого индонезийского дикого кабана лунки верхних клыков развёрнуты вверх: зубы растут прямо через кожу верхней губы и загибаются дугой ко лбу. Они слишком хрупкие для драки, но служат щитом, защищающим морду и глаза от ударов нижних клыков соперника, а также привлекают самок.",
+                funcMain: "Защита глаз и морды в турнирных схватках и половой отбор.",
+                funcDetail: "Если самец не стачивает клыки о деревья, они могут врасти ему в лоб.",
+                fact: "Название «бабирусса» с малайского переводится как «свинья-олень»."
+            }
+        ]
+    },
+    ears: {
+        title: "Рубрика 05: Чьё ухо",
+        items: [
+            {
+                name: "Сервал",
+                latin: "Leptailurus serval",
+                macroUrl: "serval.png",
+                fullAnimalUrl: "https://safarisafricana.com/wp-content/uploads/2020/06/2-8.jpg",
+                whyTitle: "Зачем сервалу самые большие уши среди кошек?",
+                whyText: "Сервал охотится в высокой густой траве африканской саванны, где грызунов совершенно не видно. Его огромные овальные уши, посаженные близко на макушке, работают как спутниковые тарелки: они улавливают даже тихий писк и шорох мыши под землёй, позволяя кошке прыгнуть точно на звук с закрытыми глазами.",
+                funcMain: "Акустическая локация грызунов в высокой траве и под землёй.",
+                funcDetail: "На тыльной стороне ушей есть белые пятна — сигнал для котят в траве.",
+                fact: "Сервал совершает вертикальные прыжки до 3 метров в высоту, ловя птиц на лету."
+            },
+            {
+                name: "Ориентальная кошка",
+                latin: "Felis catus",
+                macroUrl: "oriental.png",
+                fullAnimalUrl: "https://sun9-11.vkuserphoto.ru/impf/inQN87P_HtmHlc9_G201uTCQrlx9Ux_lC9FzFA/gaXC2nHsw2I.jpg?size=1920x768&quality=95&crop=0,29,1280,511&sign=fe490634fad5a62ce987954ffec9848a&type=cover_groupg",
+                whyTitle: "Почему у ориентальной кошки такие огромные низко посаженные уши?",
+                whyText: "Ориентальная кошка — результат целенаправленной селекции на базе сиамских кошек. Заводчики усиливали восточный тип внешности: клиновидную голову и очень большие, широкие у основания уши, продолжающие линии морды. Несмотря на декоративность, такие уши отлично улавливают звуки и отводят тепло.",
+                funcMain: "Породный признак (селекция) и сверхчувствительный слух.",
+                funcDetail: "Линия от кончика носа до кончика уха образует равносторонний треугольник.",
+                fact: "Ориентальные кошки славятся своей «разговорчивостью» и богатым диапазоном голоса."
+            },
+            {
+                name: "Каракал",
+                latin: "Caracal caracal",
+                macroUrl: "caracal.png",
+                fullAnimalUrl: "https://i.pinimg.com/736x/25/71/d8/2571d8dd09b728496158e4c196b61630.jpg",
+                whyTitle: "Зачем каракалу длинные чёрные кисточки на ушах?",
+                whyText: "Ухами каракала управляют более 20 отдельных мышц! Длинные (до 5 см) чёрные кисточки выполняют сразу три задачи: служат языком жестов для общения с сородичами в сухой траве, разбивают треугольный контур головы при маскировке и, по мнению биологов, направляют звуковые волны точно в ушную раковину.",
+                funcMain: "Визуальная сигнализация, маскировка контура головы и фокусировка звука.",
+                funcDetail: "Название «каракал» происходит от тюркского «кара-кулак» — «чёрное ухо».",
+                fact: "Каракал способен сбить лапой в прыжке сразу несколько взлетающих птиц."
+            },
+            {
+                name: "Обыкновенная рысь",
+                latin: "Lynx lynx",
+                macroUrl: "lynx.png",
+                fullAnimalUrl: "https://data.cyclowiki.org/images/e/e4/Lynx_lynx_5.jpg",
+                whyTitle: "Чем уши рыси отличаются от ушей каракала и зачем ей бакенбарды?",
+                whyText: "У рыси уши более широкие и треугольные, с густым зимним подшёрстком и короткими чёрными кисточками-антеннами, помогающими улавливать малейший хруст снега (рысь слышит шаги зайца за 300 метров). Широкие бакенбарды по бокам морды работают как дополнительный отражатель звука к ушам.",
+                funcMain: "Улавливание тихих звуков в зимнем лесу и защита ушей от обморожения.",
+                funcDetail: "Кисточки работают как чувствительные волоски-антенны.",
+                fact: "Без кисточек слух рыси заметно притупляется."
+            },
+            {
+                name: "Обыкновенная белка",
+                latin: "Sciurus vulgaris",
+                macroUrl: "squirrel.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Eichh%C3%B6rnchen_D%C3%BCsseldorf_Hofgarten_edit.jpg/1280px-Eichh%C3%B6rnchen_D%C3%BCsseldorf_Hofgarten_edit.jpg",
+                whyTitle: "Почему кисточки на ушах белки появляются только зимой?",
+                whyText: "Летом уши белки почти гладкие, чтобы не мешать в ветвях и не перегреваться. Осенью во время линьки на кончиках ушей отрастают длинные пушистые кисточки: они защищают тонкую кожу ушных раковин от сильных морозов и ледяного ветра на вершинах деревьев.",
+                funcMain: "Защита кончиков ушей от обморожения в зимний период.",
+                funcDetail: "Весной белка линяет и сбрасывает ушные кисточки до следующей осени.",
+                fact: "По длине кисточек и цвету шубки легко отличить зимнюю белку от летней."
+            },
+            {
+                name: "Летучая мышь (Ушан)",
+                latin: "Chiroptera",
+                macroUrl: "bat.png",
+                fullAnimalUrl: "https://moya-planeta.ru/upload/images/xl/fe/ae/feae5126a58db23a303859046179b5d2232b9614.jpg",
+                whyTitle: "Зачем летучей мыши уши размером почти с тело?",
+                whyText: "Летучие мыши ориентируются в полной темноте с помощью эхолокации: они испускают ультразвуковые крики и слушают отражённое эхо. Огромные уши с тончайшими складками и козелком (выступом внутри уха) позволяют уловить слабейший отголосок от крыла комара и точно определить высоту и дальность цели.",
+                funcMain: "Приём отражённого ультразвука для трёхмерной навигации в темноте.",
+                funcDetail: "Во время сна мышь складывает уши гармошкой под крылья, чтобы не терять влагу.",
+                fact: "Во время собственного крика мышцы среднего уха мыши на миллисекунду отключают слух, чтобы не оглохнуть."
+            },
+            {
+                name: "Фенек",
+                latin: "Vulpes zerda",
+                macroUrl: "fennec.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fennec_Fox_Vulpes_zerda.jpg/1280px-Fennec_Fox_Vulpes_zerda.jpg",
+                whyTitle: "Зачем крошечной лисице фенеку 15-сантиметровые уши?",
+                whyText: "Это классический пример правила Аллена: у животных жарких пустынь выступающие части тела увеличены для отдачи тепла. Тонкие уши фенека пронизаны густой сетью кровеносных сосудов и работают как радиатор охлаждения в Сахаре. Вторая задача — слышать движение жуков и ящериц глубоко под песком.",
+                funcMain: "Охлаждение крови в жару (терморегуляция) и поиск добычи под песком.",
+                funcDetail: "Самые большие уши относительно размера тела среди всех псовых.",
+                fact: "Фенек весит всего 1–1,5 кг — меньше домашней кошки."
+            },
+            {
+                name: "Африканский слон",
+                latin: "Loxodonta africana",
+                macroUrl: "elephant_ear.png",
+                fullAnimalUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1280px-African_Bush_Elephant.jpg",
+                whyTitle: "Почему уши африканского слона похожи на карту Африки и зачем он ими машет?",
+                whyText: "У слонов нет потовых желёз, а огромное тело вырабатывает колоссальное количество тепла. Задняя сторона гигантских ушей (площадью до 2 кв. метров каждое) покрыта тонкой кожей с сетью крупных вен. Обмахиваясь ушами как веерами, слон охлаждает проходящую через них кровь на 5–6 градусов.",
+                funcMain: "Главный «кондиционер» организма и демонстрация угрозы при расправлении.",
+                funcDetail: "У африканского слона уши вдвое больше, чем у индийского, живущего в тени лесов.",
+                fact: "Расправив уши в стороны, слон визуально увеличивает свои размеры, отпугивая соперников."
+            },
+            {
+                name: "Жираф",
+                latin: "Giraffa camelopardalis",
+                macroUrl: "giraffe_ear.png",
+                fullAnimalUrl: "https://static1-repo.aif.ru/1/1a/3047359/034797c065331ab6eaf38ac6dfba5ac1.webp",
+                whyTitle: "Почему уши жирафа вытянутые и вращаются независимо друг от друга?",
+                whyText: "Голова жирафа находится на высоте 5–6 метров, поэтому ему важно контролировать обстановку вокруг без лишних поворотов длинной шеи. Небольшие листовидные уши легко поворачиваются в разные стороны независимо друг от друга, а густая шерсть внутри защищает слуховой проход от колючек акации и насекомых.",
+                funcMain: "Независимый контроль звуков с разных направлений и защита от колючек.",
+                funcDetail: "Рядом с ушами расположены оссиконы — покрытые кожей и шерстью рожки.",
+                fact: "Жирафы общаются друг с другом на инфразвуковых частотах, не слышных человеку."
+            },
+            {
+                name: "Тибетский як",
+                latin: "Bos grunniens",
+                macroUrl: "yak_ear.png",
+                fullAnimalUrl: "https://static.tildacdn.com/tild3737-6532-4665-a334-373536666132/photo.jpg",
+                whyTitle: "Почему у яка такие маленькие и мохнатые уши?",
+                whyText: "В суровом высокогорье Тибета, где морозы опускаются до -40 °C, большие уши мгновенно бы отмёрзли. Согласно правилу Аллена, у северных и высокогорных животных уши максимально укорочены и плотно покрыты густой шерстью, чтобы свести потери тепла к минимуму.",
+                funcMain: "Максимальное сохранение тепла и защита от обморожения в горах.",
+                funcDetail: "Маленькая площадь поверхности минимизирует теплоотдачу.",
+                fact: "Як способен спать прямо на снегу даже в сильную метель."
+            }
+        ]
+    }
+};
+
+let currentCat = 'clothes';
+let currentIdx = 0;
+
+function selectCategory(catKey) {
+    currentCat = catKey;
+    currentIdx = 0;
+    document.querySelectorAll('.cat-tab').forEach(btn => {
+        const isSel = btn.dataset.cat === catKey;
+        btn.className = isSel
+            ? "cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-yellow text-black transition-all cursor-pointer flex items-center gap-2"
+            : "cat-tab px-4 py-2 rounded-xl text-xs font-bold uppercase font-oswald tracking-wider bg-natgeo-card border border-natgeo-cardBorder text-white hover:border-natgeo-yellow transition-all cursor-pointer flex items-center gap-2";
+    });
+    renderSlide();
+}
+
+function goToSlide(idx) {
+    const items = reviewData[currentCat].items;
+    if (idx >= 0 && idx < items.length) {
+        currentIdx = idx;
+        renderSlide();
+    }
+}
+
+function prevSlide() {
+    if (currentIdx > 0) {
+        currentIdx--;
+        renderSlide();
+    }
+}
+
+function nextSlide() {
+    const items = reviewData[currentCat].items;
+    if (currentIdx < items.length - 1) {
+        currentIdx++;
+        renderSlide();
+    } else {
+        // Переход к следующей рубрике по кругу
+        const keys = ['clothes', 'eyes', 'paws', 'teeth', 'ears'];
+        const nextCat = keys[(keys.indexOf(currentCat) + 1) % keys.length];
+        selectCategory(nextCat);
+    }
+}
+
+function renderSlide() {
+    const cat = reviewData[currentCat];
+    const item = cat.items[currentIdx];
+
+    document.getElementById('slide-badge').textContent = cat.title;
+    document.getElementById('slide-index').textContent = currentIdx + 1;
+    document.getElementById('slide-total').textContent = cat.items.length;
+
+    const fullImg = document.getElementById('full-animal-img');
+    fullImg.onerror = function() {
+        this.onerror = null;
+        this.src = item.macroUrl;
+    };
+    fullImg.src = item.fullAnimalUrl;
+
+    document.getElementById('macro-animal-img').src = item.macroUrl;
+    document.getElementById('animal-latin').textContent = item.latin;
+    document.getElementById('animal-name').textContent = item.name;
+    document.getElementById('why-title').querySelector('span').textContent = item.whyTitle;
+    document.getElementById('why-text').textContent = item.whyText;
+    document.getElementById('func-main').textContent = item.funcMain;
+    document.getElementById('func-detail').textContent = item.funcDetail;
+    document.getElementById('quiz-fact').textContent = item.fact;
+
+    // Кнопки навигации
+    const btnPrev = document.getElementById('btn-prev');
+    btnPrev.disabled = currentIdx === 0;
+    btnPrev.classList.toggle('opacity-40', currentIdx === 0);
+    btnPrev.classList.toggle('cursor-not-allowed', currentIdx === 0);
+
+    const nextLabel = document.getElementById('btn-next-label');
+    nextLabel.textContent = currentIdx === cat.items.length - 1 ? "Следующая рубрика" : "Следующее животное";
+
+    // Точки-переключатели 1..10
+    const dotsBox = document.getElementById('slide-dots');
+    dotsBox.innerHTML = cat.items.map((_, i) => {
+        const active = i === currentIdx;
+        return `<button onclick="goToSlide(${i})" class="w-7 h-7 rounded-lg text-xs font-bold font-oswald transition-all cursor-pointer ${active ? 'bg-natgeo-yellow text-black scale-110' : 'bg-natgeo-card border border-natgeo-cardBorder text-natgeo-textMuted hover:text-white'}">${i + 1}</button>`;
+    }).join('');
+}
+
+function uploadCustomFullPhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    reviewData[currentCat].items[currentIdx].fullAnimalUrl = url;
+    document.getElementById('full-animal-img').src = url;
+}
+
+// Навигация с клавиатуры
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    renderSlide();
+});
+</script>
+</body>
+</html>
